@@ -19,10 +19,23 @@
        
        PROCEDURE DIVISION.
        MAIN.
+
+      *    READ FILE.
            OPEN INPUT TRADER-DATA-FILE
            READ TRADER-DATA-FILE 
-           AT END SET END-OF-TRADER-FILE TO TRUE
+           AT END 
+              SET END-OF-TRADER-FILE TO TRUE
            END-READ
-           
+
+      *    LOOP TRADER DATA.    
+           PERFORM UNTIL END-OF-TRADER-FILE 
+              DISPLAY "TRADER PROFIT: " TRADER-PROFIT
+
+              READ TRADER-DATA-FILE
+              AT END
+                 SET END-OF-TRADER-FILE TO TRUE
+              END-READ 
+           END-PERFORM
+
 
            .
