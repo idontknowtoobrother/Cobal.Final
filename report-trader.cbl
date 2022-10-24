@@ -16,6 +16,10 @@
            05 TRADER-ID PIC 9(4).
            05 TRADER-PROFIT  PIC 9(6).
        WORKING-STORAGE SECTION.
+       
+       01  HEADER-REPORT PIC X(45) VALUE 
+       "PROVINCE    P INCOME    MEMBER  MEMBER INCOME".
+       
        01  PROVINCE-TABLE.
            05 PROVINCE-TOTAL OCCURS 77 TIMES.
               10 PROVINCE-PROFIT-TOTAL   PIC 9(9).
@@ -29,15 +33,20 @@
               SET END-OF-TRADER-FILE TO TRUE
            END-READ
 
-      *    LOOP TRADER DATA.    
+
+
+      *    LOOP TRADER DATA ( COMPUTED "P INCOME" ).    
            PERFORM UNTIL END-OF-TRADER-FILE 
-      *    TODO: ASSIGN TO ARRAY HERE
+      
               ADD TRADER-PROFIT TO PROVINCE-PROFIT-TOTAL(PROVINCE-ID)
+      
       *       THIS LIKE A READ NEXT LINE IN JAVA ...
               READ TRADER-DATA-FILE
               AT END
                  SET END-OF-TRADER-FILE TO TRUE
               END-READ 
            END-PERFORM
+           
+           DISPLAy HEADER-REPORT
 
            .
