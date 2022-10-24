@@ -10,7 +10,7 @@
        FILE SECTION. 
        FD  TRADER-DATA-FILE.
        01  TRADER-RECORD.
-           88 END-OF-TRADER-FILE
+           88 END-OF-TRADER-FILE VALUE HIGH-VALUES 
            .
        05  PROVINCE-ID PIC 9(2).
            05 TRADER-ID PIC 9(4).
@@ -23,4 +23,6 @@
            READ TRADER-DATA-FILE 
            AT END SET END-OF-TRADER-FILE TO TRUE
            END-READ
+           
+
            .
