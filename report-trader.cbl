@@ -28,6 +28,7 @@
        01  PROVINCE-TABLE.
            05 PROVINCE-TOTAL OCCURS 77 TIMES.
               10 PROVINCE-PROFIT-TOTAL   PIC 9(9).
+              10 PROVINCE-BEST-TRADER    PIC 9(2) VALUE 00.
        PROCEDURE DIVISION.
        MAIN.
 
@@ -42,9 +43,14 @@
 
       *    LOOP TRADER DATA ( COMPUTED "P INCOME" ).    
            PERFORM UNTIL END-OF-TRADER-FILE 
-      
+              
               ADD TRADER-PROFIT TO PROVINCE-PROFIT-TOTAL(PROVINCE-ID)
-      
+              
+              IF PROVINCE-BEST-TRADER(PROVINCE-ID) 
+              LESS THAN TRADER-PROFIT THEN
+                 MOVE TRADER-PROFIT TO PROVINCE-BEST-TRADER(PROVINCE-ID)
+              END-IF 
+             
       *       THIS LIKE A READ NEXT LINE IN JAVA ...
               READ TRADER-DATA-FILE
               AT END
@@ -59,6 +65,8 @@
               DISPLAY "    " PROVINCE-INDEX WITH NO ADVANCING
               MOVE PROVINCE-PROFIT-TOTAL(PROVINCE-INDEX) 
               TO US-FORMAT-DETAIL
-              DISPLAY US-FORMAT-DETAIL
+              DISPLAY US-FORMAT-DETAIL WITH NO ADVANCING 
+              DISPLAY "   " PROVINCE-BEST-TRADER(PROVINCE-INDEX)
+             
            END-PERFORM 
            .
