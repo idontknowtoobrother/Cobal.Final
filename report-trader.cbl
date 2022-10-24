@@ -17,6 +17,7 @@
            05 TRADER-PROFIT  PIC 9(6).
        WORKING-STORAGE SECTION.
        
+       01  PROVINCE-INDEX PIC 9(2).
        01  HEADER-REPORT PIC X(45) VALUE 
        "PROVINCE    P INCOME    MEMBER  MEMBER INCOME".
        
@@ -47,6 +48,11 @@
               END-READ 
            END-PERFORM
            
-           DISPLAy HEADER-REPORT
-
+      *    DISPLAY RESULT
+           DISPLAY HEADER-REPORT
+           PERFORM VARYING PROVINCE-INDEX FROM 1 BY 1
+           UNTIL PROVINCE-INDEX GREATER THAN 77
+              DISPLAY "    " PROVINCE-INDEX WITH NO ADVANCING 
+              DISPLAY "     " PROVINCE-PROFIT-TOTAL(PROVINCE-INDEX)
+           END-PERFORM 
            .
